@@ -1,0 +1,34 @@
+USE [prsync_com_web]
+GO
+/****** Object:  StoredProcedure [dbo].[SPEntriesGetByAgency]    Script Date: 9/4/2023 11:55:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[SPEntriesGetByAgency]
+	@AgencyId int=10
+AS
+
+DECLARE @MinValue int
+SELECT @MinValue = dbo.FXEntryIdRecent()
+
+SELECT 
+	Top 15
+	E.EntryId
+	,E.EntryTitle
+	,E.EntryTag
+	,E.EntryDate
+	,E.EntryTeaser
+	,E.CompanyId
+	,E.CompanyTag
+	,E.CompanyName
+FROM
+	dbo.EntriesComplete E
+	INNER JOIN Users U ON E.EntryOwner = U.UserId
+WHERE
+	E.EntryId > @MinValue
+	AND
+	U.AgencyId = @AgencyId
+	AND
+	U.AgencyValidated = 1
+ORDER BY E.EntryId DESC
