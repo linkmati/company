@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C5474F70-E659-4C15-90C4-31AB90E6E312}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CompanyFeeds.Tests</RootNamespace>
+    <AssemblyName>CompanyFeeds.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\ConfigurationTest.cs" />
+    <Compile Include="Controllers\BaseControllerTest.cs" />
+    <Compile Include="Filters\CheckBlacklistedUrlsTest.cs" />
+    <Compile Include="Filters\CheckSpamTest.cs" />
+    <Compile Include="Controllers\CommentsControllerTest.cs" />
+    <Compile Include="Controllers\CompaniesTest.cs" />
+    <Compile Include="Controllers\EntriesControllerTest.cs" />
+    <Compile Include="Controllers\FeedbackControllerTest.cs" />
+    <Compile Include="Controllers\HomeControllerTests.cs" />
+    <Compile Include="Filters\IpFilterTest.cs" />
+    <Compile Include="Filters\ResultCacheTest.cs" />
+    <Compile Include="Fakes\FakeActionDescriptor.cs" />
+    <Compile Include="Fakes\FakeControllerContext.cs" />
+    <Compile Include="Fakes\FakeHttpContext.cs" />
+    <Compile Include="Fakes\FakeHttpRequest.cs" />
+    <Compile Include="Fakes\FakeHttpResponse.cs" />
+    <Compile Include="Fakes\FakeHttpSessionState.cs" />
+    <Compile Include="Fakes\FakeIdentity.cs" />
+    <Compile Include="Fakes\FakePrincipal.cs" />
+    <Compile Include="FeedClient\FeedClientTests.cs" />
+    <Compile Include="Modules\RedirectorModuleTest.cs" />
+    <Compile Include="Services\CompaniesServiceTest.cs" />
+    <Compile Include="Services\NotificationsServiceTest.cs" />
+    <Compile Include="Services\PaymentServiceTests.cs" />
+    <Compile Include="TestHelper.cs" />
+    <Compile Include="Utils\SecurityHelperPromositeUserTest.cs" />
+    <Compile Include="Services\EntriesServiceTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\UsersServiceTest.cs" />
+    <Compile Include="Utils\UtilsTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AuthoringTests.txt" />
+    <Content Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CompanyFeeds.Configuration\CompanyFeeds.Configuration.csproj">
+      <Project>{889C22A4-D80F-477C-86FB-8B514CE98167}</Project>
+      <Name>CompanyFeeds.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CompanyFeeds.DataAccess\CompanyFeeds.DataAccess.csproj">
+      <Project>{A089B82C-991C-41B3-A8BE-77ABC0E8681C}</Project>
+      <Name>CompanyFeeds.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CompanyFeeds.FeedClient\CompanyFeeds.FeedClient.csproj">
+      <Project>{94141F2D-FC40-465B-B015-9827D779DFCC}</Project>
+      <Name>CompanyFeeds.FeedClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CompanyFeeds.Services\CompanyFeeds.Services.csproj">
+      <Project>{E71E257F-6FF6-46AB-AEFD-915411931661}</Project>
+      <Name>CompanyFeeds.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CompanyFeeds.Web.Controllers\CompanyFeeds.Web.Controllers.csproj">
+      <Project>{82728D52-B33A-4B39-9D5E-0A989AD7BAFD}</Project>
+      <Name>CompanyFeeds.Web.Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CompanyFeeds.Web.UI\CompanyFeeds.Web.UI.csproj">
+      <Project>{AEAE6BB2-634F-400B-82E4-C940C6254A1A}</Project>
+      <Name>CompanyFeeds.Web.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CompanyFeeds.Web\CompanyFeeds.Web.csproj">
+      <Project>{BF2FC70B-FE55-48C6-A320-64E68FCB43FD}</Project>
+      <Name>CompanyFeeds.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CompanyFeeds\CompanyFeeds.csproj">
+      <Project>{2EBD2405-060E-49F2-B697-EFE67800BA01}</Project>
+      <Name>CompanyFeeds</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
