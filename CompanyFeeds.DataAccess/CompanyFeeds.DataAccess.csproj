@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A089B82C-991C-41B3-A8BE-77ABC0E8681C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CompanyFeeds.DataAccess</RootNamespace>
+    <AssemblyName>CompanyFeeds.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdoExtensions.cs" />
+    <Compile Include="AgenciesDataAccess.cs" />
+    <Compile Include="BaseDataAccess.cs" />
+    <Compile Include="CommentsDataAccess.cs" />
+    <Compile Include="CompaniesDataAccess.cs" />
+    <Compile Include="EntriesDataAccess.cs" />
+    <Compile Include="HostBlackListDataAccess.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Queries\AgenciesQueries.cs">
+      <DependentUpon>AgenciesQueries.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Queries\AgenciesQueries.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AgenciesQueries.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Queries\CategoriesQueries.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CategoriesQueries.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Queries\CompaniesQueries.cs">
+      <DependentUpon>CompaniesQueries.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Queries\CompaniesQueries.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CompaniesQueries.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Queries\CountriesQueries.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CountriesQueries.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Queries\EntriesQueries.cs">
+      <DependentUpon>EntriesQueries.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Queries\EntriesQueries.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntriesQueries.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Queries\FlagsQueries.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FlagsQueries.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Queries\LogsQueries.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogsQueries.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Queries\SubscriptionsQueries.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SubscriptionsQueries.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Queries\TestQueries.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TestQueries.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Queries\UsersQueries.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsersQueries.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="SubscriptionsDataAccess.cs" />
+    <Compile Include="UsersDataAccess.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Queries\AgenciesQueries.xsc">
+      <DependentUpon>AgenciesQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\AgenciesQueries.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AgenciesQueries.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Queries\AgenciesQueries.xss">
+      <DependentUpon>AgenciesQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\CategoriesQueries.xsc">
+      <DependentUpon>CategoriesQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\CategoriesQueries.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CategoriesQueries.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Queries\CategoriesQueries.xss">
+      <DependentUpon>CategoriesQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\CompaniesQueries.xsc">
+      <DependentUpon>CompaniesQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\CompaniesQueries.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CompaniesQueries.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Queries\CompaniesQueries.xss">
+      <DependentUpon>CompaniesQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\CountriesQueries.xsc">
+      <DependentUpon>CountriesQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\CountriesQueries.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CountriesQueries.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Queries\CountriesQueries.xss">
+      <DependentUpon>CountriesQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\EntriesQueries.xsc">
+      <DependentUpon>EntriesQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\EntriesQueries.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EntriesQueries.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Queries\EntriesQueries.xss">
+      <DependentUpon>EntriesQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\FlagsQueries.xsc">
+      <DependentUpon>FlagsQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\FlagsQueries.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FlagsQueries.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Queries\FlagsQueries.xss">
+      <DependentUpon>FlagsQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\LogsQueries.xsc">
+      <DependentUpon>LogsQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\LogsQueries.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>LogsQueries.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Queries\LogsQueries.xss">
+      <DependentUpon>LogsQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\SubscriptionsQueries.xsc">
+      <DependentUpon>SubscriptionsQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\SubscriptionsQueries.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SubscriptionsQueries.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Queries\SubscriptionsQueries.xss">
+      <DependentUpon>SubscriptionsQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\TestQueries.xsc">
+      <DependentUpon>TestQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\TestQueries.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TestQueries.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Queries\TestQueries.xss">
+      <DependentUpon>TestQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\UsersQueries.xsc">
+      <DependentUpon>UsersQueries.xsd</DependentUpon>
+    </None>
+    <None Include="Queries\UsersQueries.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>UsersQueries.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Queries\UsersQueries.xss">
+      <DependentUpon>UsersQueries.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CompanyFeeds\CompanyFeeds.csproj">
+      <Project>{2EBD2405-060E-49F2-B697-EFE67800BA01}</Project>
+      <Name>CompanyFeeds</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

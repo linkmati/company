@@ -1,0 +1,6 @@
+﻿User-agent: *
+Disallow: /entries/reportabuse
+Disallow: /comments/add
+Disallow: /comments/unsubscribe
+Disallow: /companies/get/
+Disallow: /user/subscriptions

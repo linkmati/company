@@ -1,0 +1,44 @@
+<%@ Master Language="C#" AutoEventWireup="false" CodeBehind="Site.master.cs" Inherits="CompanyFeeds.Web.UI.Es.Views.Shared.Site" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
+<head>
+    <link href="/styles/common.css?2014" rel="stylesheet" type="text/css" media="screen" />
+    <link href="/styles/print.css?2013-01-10" rel="stylesheet" type="text/css" media="print" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
+	<script src="/scripts/site.js?v=2013-01-10" type="text/javascript"></script>
+	<script src="/scripts/resources.js" type="text/javascript" defer="defer"></script>
+	<link rel="alternate" type="application/rss+xml" title="Notas de prensa (Home)" href="<%= Domain %>/rss/" />
+	<link rel="alternate" type="application/rss+xml" title="Notas de prensa (Recientes)" href="<%= Domain %>/rss/latest/" />
+
+	<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+	<% Html.RenderPartial("StatsTrackingBegin"); %>
+</head>
+<body>
+	<div id="container">
+		<div id="header" class="floatContainer">
+			<div id="websiteLogo"><a href="/"><img src="/images/v2/logo.gif" alt="prsync" /></a></div>
+			<ul id="headerMenu">
+			</ul>
+		</div>
+		<div id="mainContainer" class="floatContainer">
+			<div id="content">
+				<div class="<%= User != null ? "member" : "notMember" %>">
+					<asp:ContentPlaceHolder ID="MainContent" runat="server" />
+				</div>
+			</div>	
+			<div id="sidebar">
+				<ul id="menu">
+				</ul>
+				<div class="bottom"></div>
+			</div>
+		</div>
+		<div id="footer">
+			<ul>
+
+			</ul>
+		</div>
+	</div>
+	<!-- <%=ViewData["CachedStamp"]%> -->
+	<% Html.RenderPartial("StatsTrackingEnd"); %>
+</body>
+</html>

@@ -1,0 +1,42 @@
+USE [prsync_com_web]
+GO
+/****** Object:  StoredProcedure [dbo].[SPEntriesGetByCategory]    Script Date: 5/16/2019 12:18:40 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[SPEntriesGetByCategory]
+	@CategoryId int = 1
+AS
+
+DECLARE @MinEntryId int
+SET @MinEntryId = dbo.FXEntryIdRecent()
+
+SELECT
+	TOP 600
+	E.EntryId
+	,E.EntryTitle
+	,E.EntryTag
+	,E.CompanyId
+	,E.EntryTeaser
+	,E.EntryDate
+	,E.UserId
+	,E.CompanyName
+	,E.CompanyTag
+	,E.CompanyLogo
+	,E.CategoryId
+	,CASE WHEN E.UserName IS NOT NULL THEN E.UserName ELSE 'robot' END AS UserName
+	,E.AgencyId
+	,E.AgencyName
+	,E.AgencyTag
+	,E.HideAuthor
+	,dbo.FXRelevance(E.EntryDate, E.CompanyVisits) AS Relevance
+FROM
+	EntriesComplete E
+WHERE
+	E.EntryId > @MinEntryId
+	AND
+	E.CategoryId = @CategoryId
+ORDER BY Relevance DESC
+

@@ -1,0 +1,809 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ShowPlanXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0" Build="9.00.5000.00" xmlns="http://schemas.microsoft.com/sqlserver/2004/07/showplan">
+  <BatchSequence>
+    <Batch>
+      <Statements>
+        <StmtSimple>
+          <StoredProc ProcName="SPEntriesGetRelevant">
+            <Statements>
+              <StmtSimple StatementCompId="3" StatementEstRows="1" StatementId="2" StatementOptmLevel="TRIVIAL" StatementSubTreeCost="1.257E-06" StatementText="CREATE PROCEDURE [dbo].[SPEntriesGetRelevant]&#xD;&#xA;&#xD;&#xA;AS&#xD;&#xA;&#xD;&#xA;DECLARE @MinValue int&#xD;&#xA;SELECT @MinValue = dbo.FXEntryIdRecent()&#xD;&#xA;&#xD;" StatementType="ASSIGN WITH QUERY">
+                <StatementSetOptions ANSI_NULLS="false" ANSI_PADDING="false" ANSI_WARNINGS="false" ARITHABORT="true" CONCAT_NULL_YIELDS_NULL="false" NUMERIC_ROUNDABORT="false" QUOTED_IDENTIFIER="false" />
+                <QueryPlan CachedPlanSize="8" CompileTime="0" CompileCPU="0" CompileMemory="80">
+                  <RelOp AvgRowSize="11" EstimateCPU="1E-07" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="1" LogicalOp="Compute Scalar" NodeId="0" Parallel="false" PhysicalOp="Compute Scalar" EstimatedTotalSubtreeCost="1.257E-06">
+                    <OutputList>
+                      <ColumnReference Column="Expr1000" />
+                    </OutputList>
+                    <ComputeScalar>
+                      <DefinedValues>
+                        <DefinedValue>
+                          <ColumnReference Column="Expr1000" />
+                          <ScalarOperator ScalarString="[CompanyFeeds].[dbo].[FXEntryIdRecent]()">
+                            <UserDefinedFunction FunctionName="[CompanyFeeds].[dbo].[FXEntryIdRecent]" />
+                          </ScalarOperator>
+                        </DefinedValue>
+                      </DefinedValues>
+                      <RelOp AvgRowSize="9" EstimateCPU="1.157E-06" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="1" LogicalOp="Constant Scan" NodeId="1" Parallel="false" PhysicalOp="Constant Scan" EstimatedTotalSubtreeCost="1.157E-06">
+                        <OutputList />
+                        <ConstantScan />
+                      </RelOp>
+                    </ComputeScalar>
+                  </RelOp>
+                </QueryPlan>
+              </StmtSimple>
+              <StmtSimple StatementCompId="4" StatementEstRows="1000" StatementId="5" StatementOptmLevel="FULL" StatementSubTreeCost="123.707" StatementText="&#xA;SELECT &#xD;&#xA;	top 1000&#xD;&#xA;	E.EntryId&#xD;&#xA;	,E.EntryTitle&#xD;&#xA;	,E.EntryTag&#xD;&#xA;	,E.CompanyId&#xD;&#xA;	,E.EntryTeaser&#xD;&#xA;	,E.EntryDate&#xD;&#xA;	,E.UserId&#xD;&#xA;	,E.CompanyName&#xD;&#xA;	,E.CompanyTag&#xD;&#xA;	,E.CompanyLogo&#xD;&#xA;	,E.CategoryId&#xD;&#xA;	,CASE WHEN E.UserName IS NOT NULL THEN E.UserName ELSE 'robot' END AS UserName&#xD;&#xA;	,E.AgencyId&#xD;&#xA;	,E.AgencyName&#xD;&#xA;	,E.AgencyTag&#xD;&#xA;	,E.HideAuthor&#xD;&#xA;	,dbo.FXRelevance(E.EntryDate, E.CompanyVisits) AS Relevance&#xD;&#xA;FROM&#xD;&#xA;	EntriesComplete E&#xD;&#xA;	INNER JOIN LatestEntriesCompanies EL ON E.EntryId = EL.EntryId&#xD;&#xA;WHERE&#xD;&#xA;	E.EntryId &gt; @MinValue&#xD;&#xA;	AND&#xD;&#xA;	E.CompanyVisits &gt; 50&#xD;&#xA;ORDER BY Relevance DESC&#xD;&#xA;&#xD;&#xA;" StatementType="SELECT">
+                <StatementSetOptions ANSI_NULLS="false" ANSI_PADDING="false" ANSI_WARNINGS="false" ARITHABORT="true" CONCAT_NULL_YIELDS_NULL="false" NUMERIC_ROUNDABORT="false" QUOTED_IDENTIFIER="false" />
+                <QueryPlan CachedPlanSize="114" CompileTime="406" CompileCPU="343" CompileMemory="1184">
+                  <MissingIndexes>
+                    <MissingIndexGroup Impact="13.6331">
+                      <MissingIndex Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]">
+                        <ColumnGroup Usage="EQUALITY">
+                          <Column Name="[EntryIsActive]" ColumnId="12" />
+                        </ColumnGroup>
+                        <ColumnGroup Usage="INEQUALITY">
+                          <Column Name="[EntryId]" ColumnId="1" />
+                        </ColumnGroup>
+                        <ColumnGroup Usage="INCLUDE">
+                          <Column Name="[EntryTitle]" ColumnId="2" />
+                          <Column Name="[EntryTag]" ColumnId="3" />
+                          <Column Name="[EntryDate]" ColumnId="4" />
+                          <Column Name="[CompanyId]" ColumnId="5" />
+                          <Column Name="[EntryTeaser]" ColumnId="6" />
+                          <Column Name="[UserId]" ColumnId="10" />
+                          <Column Name="[EntryOwner]" ColumnId="15" />
+                        </ColumnGroup>
+                      </MissingIndex>
+                    </MissingIndexGroup>
+                    <MissingIndexGroup Impact="58.758">
+                      <MissingIndex Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]">
+                        <ColumnGroup Usage="EQUALITY">
+                          <Column Name="[EntryIsActive]" ColumnId="12" />
+                        </ColumnGroup>
+                        <ColumnGroup Usage="INCLUDE">
+                          <Column Name="[EntryId]" ColumnId="1" />
+                          <Column Name="[CompanyId]" ColumnId="5" />
+                        </ColumnGroup>
+                      </MissingIndex>
+                    </MissingIndexGroup>
+                  </MissingIndexes>
+                  <RelOp AvgRowSize="694" EstimateCPU="1.05577" EstimateIO="0.0112613" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="1000" LogicalOp="TopN Sort" NodeId="0" Parallel="false" PhysicalOp="Sort" EstimatedTotalSubtreeCost="123.707">
+                    <OutputList>
+                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTitle" />
+                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTag" />
+                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryDate" />
+                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTeaser" />
+                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyTag" />
+                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyName" />
+                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CategoryId" />
+                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyLogo" />
+                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserId" />
+                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyId" />
+                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyName" />
+                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyTag" />
+                      <ColumnReference Column="Expr1012" />
+                      <ColumnReference Column="Expr1017" />
+                      <ColumnReference Column="Expr1018" />
+                    </OutputList>
+                    <MemoryFractions Input="0" Output="1" />
+                    <TopSort Distinct="false" Rows="1000">
+                      <OrderBy>
+                        <OrderByColumn Ascending="false">
+                          <ColumnReference Column="Expr1018" />
+                        </OrderByColumn>
+                      </OrderBy>
+                      <RelOp AvgRowSize="694" EstimateCPU="0.00164239" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="16423.9" LogicalOp="Compute Scalar" NodeId="1" Parallel="false" PhysicalOp="Compute Scalar" EstimatedTotalSubtreeCost="122.639">
+                        <OutputList>
+                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTitle" />
+                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTag" />
+                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryDate" />
+                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTeaser" />
+                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyTag" />
+                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyName" />
+                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CategoryId" />
+                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyLogo" />
+                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserId" />
+                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyId" />
+                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyName" />
+                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyTag" />
+                          <ColumnReference Column="Expr1012" />
+                          <ColumnReference Column="Expr1017" />
+                          <ColumnReference Column="Expr1018" />
+                        </OutputList>
+                        <ComputeScalar>
+                          <DefinedValues>
+                            <DefinedValue>
+                              <ColumnReference Column="Expr1018" />
+                              <ScalarOperator ScalarString="[CompanyFeeds].[dbo].[FXRelevance]([CompanyFeeds].[dbo].[Entries].[EntryDate] as [E].[EntryDate],[CompanyFeeds].[dbo].[Companies].[CompanyVisits] as [C].[CompanyVisits])">
+                                <UserDefinedFunction FunctionName="[CompanyFeeds].[dbo].[FXRelevance]">
+                                  <ScalarOperator>
+                                    <Identifier>
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryDate" />
+                                    </Identifier>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Identifier>
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyVisits" />
+                                    </Identifier>
+                                  </ScalarOperator>
+                                </UserDefinedFunction>
+                              </ScalarOperator>
+                            </DefinedValue>
+                          </DefinedValues>
+                          <RelOp AvgRowSize="690" EstimateCPU="0.00164239" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="16423.9" LogicalOp="Compute Scalar" NodeId="2" Parallel="false" PhysicalOp="Compute Scalar" EstimatedTotalSubtreeCost="122.638">
+                            <OutputList>
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTitle" />
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTag" />
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryDate" />
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTeaser" />
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyTag" />
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyName" />
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CategoryId" />
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyLogo" />
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyVisits" />
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserId" />
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyId" />
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyName" />
+                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyTag" />
+                              <ColumnReference Column="Expr1012" />
+                              <ColumnReference Column="Expr1017" />
+                            </OutputList>
+                            <ComputeScalar>
+                              <DefinedValues>
+                                <DefinedValue>
+                                  <ColumnReference Column="Expr1012" />
+                                  <ScalarOperator ScalarString="CASE WHEN [CompanyFeeds].[dbo].[Agencies].[AgencyHideAuthor] as [A].[AgencyHideAuthor]=(1) THEN (1) ELSE (0) END">
+                                    <IF>
+                                      <Condition>
+                                        <ScalarOperator>
+                                          <Compare CompareOp="EQ">
+                                            <ScalarOperator>
+                                              <Identifier>
+                                                <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyHideAuthor" />
+                                              </Identifier>
+                                            </ScalarOperator>
+                                            <ScalarOperator>
+                                              <Const ConstValue="(1)" />
+                                            </ScalarOperator>
+                                          </Compare>
+                                        </ScalarOperator>
+                                      </Condition>
+                                      <Then>
+                                        <ScalarOperator>
+                                          <Const ConstValue="(1)" />
+                                        </ScalarOperator>
+                                      </Then>
+                                      <Else>
+                                        <ScalarOperator>
+                                          <Const ConstValue="(0)" />
+                                        </ScalarOperator>
+                                      </Else>
+                                    </IF>
+                                  </ScalarOperator>
+                                </DefinedValue>
+                              </DefinedValues>
+                              <RelOp AvgRowSize="687" EstimateCPU="0.201508" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="16423.9" LogicalOp="Right Outer Join" NodeId="3" Parallel="false" PhysicalOp="Hash Match" EstimatedTotalSubtreeCost="122.636">
+                                <OutputList>
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTitle" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTag" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryDate" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTeaser" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyTag" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyName" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CategoryId" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyLogo" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyVisits" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserId" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyId" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyName" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyTag" />
+                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyHideAuthor" />
+                                  <ColumnReference Column="Expr1017" />
+                                </OutputList>
+                                <MemoryFractions Input="0.0208753" Output="0.0208753" />
+                                <Hash>
+                                  <DefinedValues />
+                                  <HashKeysBuild>
+                                    <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyId" />
+                                  </HashKeysBuild>
+                                  <HashKeysProbe>
+                                    <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="AgencyId" />
+                                  </HashKeysProbe>
+                                  <ProbeResidual>
+                                    <ScalarOperator ScalarString="[CompanyFeeds].[dbo].[Agencies].[AgencyId] as [A].[AgencyId]=[CompanyFeeds].[dbo].[Users].[AgencyId] as [U].[AgencyId] AND [CompanyFeeds].[dbo].[Users].[AgencyValidated] as [U].[AgencyValidated]=(1)">
+                                      <Logical Operation="AND">
+                                        <ScalarOperator>
+                                          <Compare CompareOp="EQ">
+                                            <ScalarOperator>
+                                              <Identifier>
+                                                <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyId" />
+                                              </Identifier>
+                                            </ScalarOperator>
+                                            <ScalarOperator>
+                                              <Identifier>
+                                                <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="AgencyId" />
+                                              </Identifier>
+                                            </ScalarOperator>
+                                          </Compare>
+                                        </ScalarOperator>
+                                        <ScalarOperator>
+                                          <Compare CompareOp="EQ">
+                                            <ScalarOperator>
+                                              <Identifier>
+                                                <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="AgencyValidated" />
+                                              </Identifier>
+                                            </ScalarOperator>
+                                            <ScalarOperator>
+                                              <Const ConstValue="(1)" />
+                                            </ScalarOperator>
+                                          </Compare>
+                                        </ScalarOperator>
+                                      </Logical>
+                                    </ScalarOperator>
+                                  </ProbeResidual>
+                                  <RelOp AvgRowSize="93" EstimateCPU="0.0011074" EstimateIO="0.0527546" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="864" LogicalOp="Clustered Index Scan" NodeId="4" Parallel="false" PhysicalOp="Clustered Index Scan" EstimatedTotalSubtreeCost="0.053862">
+                                    <OutputList>
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyId" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyName" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyTag" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyHideAuthor" />
+                                    </OutputList>
+                                    <IndexScan Ordered="false" ForcedIndex="false" NoExpandHint="false">
+                                      <DefinedValues>
+                                        <DefinedValue>
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyId" />
+                                        </DefinedValue>
+                                        <DefinedValue>
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyName" />
+                                        </DefinedValue>
+                                        <DefinedValue>
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyTag" />
+                                        </DefinedValue>
+                                        <DefinedValue>
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Alias="[A]" Column="AgencyHideAuthor" />
+                                        </DefinedValue>
+                                      </DefinedValues>
+                                      <Object Database="[CompanyFeeds]" Schema="[dbo]" Table="[Agencies]" Index="[PK_Agencies]" Alias="[A]" />
+                                    </IndexScan>
+                                  </RelOp>
+                                  <RelOp AvgRowSize="607" EstimateCPU="0.00164239" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="16423.9" LogicalOp="Compute Scalar" NodeId="5" Parallel="false" PhysicalOp="Compute Scalar" EstimatedTotalSubtreeCost="122.381">
+                                    <OutputList>
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTitle" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTag" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryDate" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTeaser" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyTag" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyName" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CategoryId" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyLogo" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyVisits" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserId" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="AgencyId" />
+                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="AgencyValidated" />
+                                      <ColumnReference Column="Expr1017" />
+                                    </OutputList>
+                                    <ComputeScalar>
+                                      <DefinedValues>
+                                        <DefinedValue>
+                                          <ColumnReference Column="Expr1017" />
+                                          <ScalarOperator ScalarString="CASE WHEN [CompanyFeeds].[dbo].[Users].[UserName] as [U].[UserName] IS NOT NULL THEN [CompanyFeeds].[dbo].[Users].[UserName] as [U].[UserName] ELSE 'robot' END">
+                                            <IF>
+                                              <Condition>
+                                                <ScalarOperator>
+                                                  <Compare CompareOp="IS NOT">
+                                                    <ScalarOperator>
+                                                      <Identifier>
+                                                        <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserName" />
+                                                      </Identifier>
+                                                    </ScalarOperator>
+                                                    <ScalarOperator>
+                                                      <Const ConstValue="NULL" />
+                                                    </ScalarOperator>
+                                                  </Compare>
+                                                </ScalarOperator>
+                                              </Condition>
+                                              <Then>
+                                                <ScalarOperator>
+                                                  <Identifier>
+                                                    <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserName" />
+                                                  </Identifier>
+                                                </ScalarOperator>
+                                              </Then>
+                                              <Else>
+                                                <ScalarOperator>
+                                                  <Const ConstValue="'robot'" />
+                                                </ScalarOperator>
+                                              </Else>
+                                            </IF>
+                                          </ScalarOperator>
+                                        </DefinedValue>
+                                      </DefinedValues>
+                                      <RelOp AvgRowSize="607" EstimateCPU="0.198561" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="16423.9" LogicalOp="Right Outer Join" NodeId="6" Parallel="false" PhysicalOp="Merge Join" EstimatedTotalSubtreeCost="122.379">
+                                        <OutputList>
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTitle" />
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTag" />
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryDate" />
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTeaser" />
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyTag" />
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyName" />
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CategoryId" />
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyLogo" />
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyVisits" />
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserId" />
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserName" />
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="AgencyId" />
+                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="AgencyValidated" />
+                                        </OutputList>
+                                        <Merge ManyToMany="false">
+                                          <InnerSideJoinColumns>
+                                            <ColumnReference Column="Expr1023" />
+                                          </InnerSideJoinColumns>
+                                          <OuterSideJoinColumns>
+                                            <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserId" />
+                                          </OuterSideJoinColumns>
+                                          <Residual>
+                                            <ScalarOperator ScalarString="[CompanyFeeds].[dbo].[Users].[UserId] as [U].[UserId]=[Expr1023]">
+                                              <Compare CompareOp="EQ">
+                                                <ScalarOperator>
+                                                  <Identifier>
+                                                    <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserId" />
+                                                  </Identifier>
+                                                </ScalarOperator>
+                                                <ScalarOperator>
+                                                  <Identifier>
+                                                    <ColumnReference Column="Expr1023" />
+                                                  </Identifier>
+                                                </ScalarOperator>
+                                              </Compare>
+                                            </ScalarOperator>
+                                          </Residual>
+                                          <RelOp AvgRowSize="45" EstimateCPU="0.082305" EstimateIO="0.880162" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="74680" LogicalOp="Clustered Index Scan" NodeId="7" Parallel="false" PhysicalOp="Clustered Index Scan" EstimatedTotalSubtreeCost="0.962467">
+                                            <OutputList>
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserId" />
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserName" />
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="AgencyId" />
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="AgencyValidated" />
+                                            </OutputList>
+                                            <IndexScan Ordered="true" ScanDirection="FORWARD" ForcedIndex="false" NoExpandHint="false">
+                                              <DefinedValues>
+                                                <DefinedValue>
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserId" />
+                                                </DefinedValue>
+                                                <DefinedValue>
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="UserName" />
+                                                </DefinedValue>
+                                                <DefinedValue>
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="AgencyId" />
+                                                </DefinedValue>
+                                                <DefinedValue>
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Alias="[U]" Column="AgencyValidated" />
+                                                </DefinedValue>
+                                              </DefinedValues>
+                                              <Object Database="[CompanyFeeds]" Schema="[dbo]" Table="[Users]" Index="[PK_Users]" Alias="[U]" />
+                                            </IndexScan>
+                                          </RelOp>
+                                          <RelOp AvgRowSize="575" EstimateCPU="1.05577" EstimateIO="0.0112613" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="16423.9" LogicalOp="Sort" NodeId="8" Parallel="false" PhysicalOp="Sort" EstimatedTotalSubtreeCost="121.218">
+                                            <OutputList>
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTitle" />
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTag" />
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryDate" />
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTeaser" />
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyTag" />
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyName" />
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CategoryId" />
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyLogo" />
+                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyVisits" />
+                                              <ColumnReference Column="Expr1023" />
+                                            </OutputList>
+                                            <MemoryFractions Input="0.377767" Output="0.979125" />
+                                            <Sort Distinct="false">
+                                              <OrderBy>
+                                                <OrderByColumn Ascending="true">
+                                                  <ColumnReference Column="Expr1023" />
+                                                </OrderByColumn>
+                                              </OrderBy>
+                                              <RelOp AvgRowSize="575" EstimateCPU="0.0817206" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="16423.9" LogicalOp="Inner Join" NodeId="9" Parallel="false" PhysicalOp="Merge Join" EstimatedTotalSubtreeCost="120.151">
+                                                <OutputList>
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTitle" />
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTag" />
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryDate" />
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTeaser" />
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyTag" />
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyName" />
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CategoryId" />
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyLogo" />
+                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyVisits" />
+                                                  <ColumnReference Column="Expr1023" />
+                                                </OutputList>
+                                                <Merge ManyToMany="false">
+                                                  <InnerSideJoinColumns>
+                                                    <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                                                  </InnerSideJoinColumns>
+                                                  <OuterSideJoinColumns>
+                                                    <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyId" />
+                                                  </OuterSideJoinColumns>
+                                                  <Residual>
+                                                    <ScalarOperator ScalarString="[CompanyFeeds].[dbo].[Companies].[CompanyId] as [C].[CompanyId]=[CompanyFeeds].[dbo].[Entries].[CompanyId] as [E].[CompanyId]">
+                                                      <Compare CompareOp="EQ">
+                                                        <ScalarOperator>
+                                                          <Identifier>
+                                                            <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyId" />
+                                                          </Identifier>
+                                                        </ScalarOperator>
+                                                        <ScalarOperator>
+                                                          <Identifier>
+                                                            <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                                                          </Identifier>
+                                                        </ScalarOperator>
+                                                      </Compare>
+                                                    </ScalarOperator>
+                                                  </Residual>
+                                                  <RelOp AvgRowSize="104" EstimateCPU="0.0534047" EstimateIO="8.02831" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="18196.9" LogicalOp="Clustered Index Scan" NodeId="10" Parallel="false" PhysicalOp="Clustered Index Scan" EstimatedTotalSubtreeCost="8.08171">
+                                                    <OutputList>
+                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyId" />
+                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyTag" />
+                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyName" />
+                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CategoryId" />
+                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyLogo" />
+                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyVisits" />
+                                                    </OutputList>
+                                                    <IndexScan Ordered="true" ScanDirection="FORWARD" ForcedIndex="false" NoExpandHint="false">
+                                                      <DefinedValues>
+                                                        <DefinedValue>
+                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyId" />
+                                                        </DefinedValue>
+                                                        <DefinedValue>
+                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyTag" />
+                                                        </DefinedValue>
+                                                        <DefinedValue>
+                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyName" />
+                                                        </DefinedValue>
+                                                        <DefinedValue>
+                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CategoryId" />
+                                                        </DefinedValue>
+                                                        <DefinedValue>
+                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyLogo" />
+                                                        </DefinedValue>
+                                                        <DefinedValue>
+                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyVisits" />
+                                                        </DefinedValue>
+                                                      </DefinedValues>
+                                                      <Object Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Index="[PK_Companies]" Alias="[C]" />
+                                                      <Predicate>
+                                                        <ScalarOperator ScalarString="[CompanyFeeds].[dbo].[Companies].[CompanyVisits] as [C].[CompanyVisits]&gt;(50)">
+                                                          <Compare CompareOp="GT">
+                                                            <ScalarOperator>
+                                                              <Identifier>
+                                                                <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Companies]" Alias="[C]" Column="CompanyVisits" />
+                                                              </Identifier>
+                                                            </ScalarOperator>
+                                                            <ScalarOperator>
+                                                              <Const ConstValue="(50)" />
+                                                            </ScalarOperator>
+                                                          </Compare>
+                                                        </ScalarOperator>
+                                                      </Predicate>
+                                                    </IndexScan>
+                                                  </RelOp>
+                                                  <RelOp AvgRowSize="483" EstimateCPU="1.11582" EstimateIO="0.0112613" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="17268.9" LogicalOp="Sort" NodeId="11" Parallel="false" PhysicalOp="Sort" EstimatedTotalSubtreeCost="111.964">
+                                                    <OutputList>
+                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTitle" />
+                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTag" />
+                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryDate" />
+                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTeaser" />
+                                                      <ColumnReference Column="Expr1023" />
+                                                    </OutputList>
+                                                    <MemoryFractions Input="0.336268" Output="0.601358" />
+                                                    <Sort Distinct="false">
+                                                      <OrderBy>
+                                                        <OrderByColumn Ascending="true">
+                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                                                        </OrderByColumn>
+                                                      </OrderBy>
+                                                      <RelOp AvgRowSize="483" EstimateCPU="0.462702" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="17268.9" LogicalOp="Inner Join" NodeId="12" Parallel="false" PhysicalOp="Hash Match" EstimatedTotalSubtreeCost="110.837">
+                                                        <OutputList>
+                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTitle" />
+                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTag" />
+                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryDate" />
+                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTeaser" />
+                                                          <ColumnReference Column="Expr1023" />
+                                                        </OutputList>
+                                                        <MemoryFractions Input="0.288499" Output="0.265091" />
+                                                        <Hash>
+                                                          <DefinedValues />
+                                                          <HashKeysBuild>
+                                                            <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="EntryId" />
+                                                          </HashKeysBuild>
+                                                          <HashKeysProbe>
+                                                            <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                                                          </HashKeysProbe>
+                                                          <RelOp AvgRowSize="11" EstimateCPU="0.168852" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="17268.9" LogicalOp="Filter" NodeId="13" Parallel="false" PhysicalOp="Filter" EstimatedTotalSubtreeCost="88.5102">
+                                                            <OutputList>
+                                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="EntryId" />
+                                                            </OutputList>
+                                                            <Filter StartupExpression="false">
+                                                              <RelOp AvgRowSize="19" EstimateCPU="0.0191877" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="191877" LogicalOp="Compute Scalar" NodeId="14" Parallel="false" PhysicalOp="Sequence Project" EstimatedTotalSubtreeCost="88.3413">
+                                                                <OutputList>
+                                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="EntryId" />
+                                                                  <ColumnReference Column="Expr1016" />
+                                                                </OutputList>
+                                                                <SequenceProject>
+                                                                  <DefinedValues>
+                                                                    <DefinedValue>
+                                                                      <ColumnReference Column="Expr1016" />
+                                                                      <ScalarOperator ScalarString="row_number">
+                                                                        <Sequence FunctionName="row_number" />
+                                                                      </ScalarOperator>
+                                                                    </DefinedValue>
+                                                                  </DefinedValues>
+                                                                  <RelOp AvgRowSize="19" EstimateCPU="0.00383754" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="191877" LogicalOp="Compute Scalar" NodeId="15" Parallel="false" PhysicalOp="Compute Scalar" EstimatedTotalSubtreeCost="88.3451">
+                                                                    <OutputList>
+                                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="EntryId" />
+                                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="CompanyId" />
+                                                                      <ColumnReference Column="Segment1026" />
+                                                                      <ColumnReference Column="Expr1027" />
+                                                                    </OutputList>
+                                                                    <ComputeScalar>
+                                                                      <DefinedValues>
+                                                                        <DefinedValue>
+                                                                          <ColumnReference Column="Expr1027" />
+                                                                          <ScalarOperator ScalarString="(1)">
+                                                                            <Const ConstValue="(1)" />
+                                                                          </ScalarOperator>
+                                                                        </DefinedValue>
+                                                                      </DefinedValues>
+                                                                      <RelOp AvgRowSize="19" EstimateCPU="0.00383754" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="191877" LogicalOp="Segment" NodeId="16" Parallel="false" PhysicalOp="Segment" EstimatedTotalSubtreeCost="88.3451">
+                                                                        <OutputList>
+                                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="EntryId" />
+                                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="CompanyId" />
+                                                                          <ColumnReference Column="Segment1026" />
+                                                                        </OutputList>
+                                                                        <Segment>
+                                                                          <GroupBy>
+                                                                            <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="CompanyId" />
+                                                                          </GroupBy>
+                                                                          <SegmentColumn>
+                                                                            <ColumnReference Column="Segment1026" />
+                                                                          </SegmentColumn>
+                                                                          <RelOp AvgRowSize="15" EstimateCPU="15.4565" EstimateIO="0.0112613" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="191877" LogicalOp="Sort" NodeId="17" Parallel="false" PhysicalOp="Sort" EstimatedTotalSubtreeCost="88.3221">
+                                                                            <OutputList>
+                                                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="EntryId" />
+                                                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="CompanyId" />
+                                                                            </OutputList>
+                                                                            <MemoryFractions Input="0.601358" Output="0.31286" />
+                                                                            <Sort Distinct="false">
+                                                                              <OrderBy>
+                                                                                <OrderByColumn Ascending="true">
+                                                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="CompanyId" />
+                                                                                </OrderByColumn>
+                                                                                <OrderByColumn Ascending="false">
+                                                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="EntryId" />
+                                                                                </OrderByColumn>
+                                                                              </OrderBy>
+                                                                              <RelOp AvgRowSize="16" EstimateCPU="0.21311" EstimateIO="72.5483" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="191877" LogicalOp="Clustered Index Scan" NodeId="18" Parallel="false" PhysicalOp="Clustered Index Scan" EstimatedTotalSubtreeCost="72.7614">
+                                                                                <OutputList>
+                                                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="EntryId" />
+                                                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="CompanyId" />
+                                                                                </OutputList>
+                                                                                <IndexScan Ordered="false" ForcedIndex="false" NoExpandHint="false">
+                                                                                  <DefinedValues>
+                                                                                    <DefinedValue>
+                                                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="EntryId" />
+                                                                                    </DefinedValue>
+                                                                                    <DefinedValue>
+                                                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="CompanyId" />
+                                                                                    </DefinedValue>
+                                                                                  </DefinedValues>
+                                                                                  <Object Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Index="[PK_Entries]" />
+                                                                                  <Predicate>
+                                                                                    <ScalarOperator ScalarString="[CompanyFeeds].[dbo].[Entries].[EntryIsActive]=(1)">
+                                                                                      <Compare CompareOp="EQ">
+                                                                                        <ScalarOperator>
+                                                                                          <Identifier>
+                                                                                            <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="EntryIsActive" />
+                                                                                          </Identifier>
+                                                                                        </ScalarOperator>
+                                                                                        <ScalarOperator>
+                                                                                          <Const ConstValue="(1)" />
+                                                                                        </ScalarOperator>
+                                                                                      </Compare>
+                                                                                    </ScalarOperator>
+                                                                                  </Predicate>
+                                                                                </IndexScan>
+                                                                              </RelOp>
+                                                                            </Sort>
+                                                                          </RelOp>
+                                                                        </Segment>
+                                                                      </RelOp>
+                                                                    </ComputeScalar>
+                                                                  </RelOp>
+                                                                </SequenceProject>
+                                                              </RelOp>
+                                                              <Predicate>
+                                                                <ScalarOperator ScalarString="[CompanyFeeds].[dbo].[Entries].[EntryId]&gt;[@MinValue] AND [Expr1016]&lt;=(2)">
+                                                                  <Logical Operation="AND">
+                                                                    <ScalarOperator>
+                                                                      <Compare CompareOp="GT">
+                                                                        <ScalarOperator>
+                                                                          <Identifier>
+                                                                            <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Column="EntryId" />
+                                                                          </Identifier>
+                                                                        </ScalarOperator>
+                                                                        <ScalarOperator>
+                                                                          <Identifier>
+                                                                            <ColumnReference Column="@MinValue" />
+                                                                          </Identifier>
+                                                                        </ScalarOperator>
+                                                                      </Compare>
+                                                                    </ScalarOperator>
+                                                                    <ScalarOperator>
+                                                                      <Compare CompareOp="LE">
+                                                                        <ScalarOperator>
+                                                                          <Identifier>
+                                                                            <ColumnReference Column="Expr1016" />
+                                                                          </Identifier>
+                                                                        </ScalarOperator>
+                                                                        <ScalarOperator>
+                                                                          <Const ConstValue="(2)" />
+                                                                        </ScalarOperator>
+                                                                      </Compare>
+                                                                    </ScalarOperator>
+                                                                  </Logical>
+                                                                </ScalarOperator>
+                                                              </Predicate>
+                                                            </Filter>
+                                                          </RelOp>
+                                                          <RelOp AvgRowSize="483" EstimateCPU="0.00575631" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="57563.1" LogicalOp="Compute Scalar" NodeId="26" Parallel="false" PhysicalOp="Compute Scalar" EstimatedTotalSubtreeCost="21.8645">
+                                                            <OutputList>
+                                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTitle" />
+                                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTag" />
+                                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryDate" />
+                                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                                                              <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTeaser" />
+                                                              <ColumnReference Column="Expr1023" />
+                                                            </OutputList>
+                                                            <ComputeScalar>
+                                                              <DefinedValues>
+                                                                <DefinedValue>
+                                                                  <ColumnReference Column="Expr1023" />
+                                                                  <ScalarOperator ScalarString="isnull([CompanyFeeds].[dbo].[Entries].[EntryOwner] as [E].[EntryOwner],[CompanyFeeds].[dbo].[Entries].[UserId] as [E].[UserId])">
+                                                                    <Intrinsic FunctionName="isnull">
+                                                                      <ScalarOperator>
+                                                                        <Identifier>
+                                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryOwner" />
+                                                                        </Identifier>
+                                                                      </ScalarOperator>
+                                                                      <ScalarOperator>
+                                                                        <Identifier>
+                                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="UserId" />
+                                                                        </Identifier>
+                                                                      </ScalarOperator>
+                                                                    </Intrinsic>
+                                                                  </ScalarOperator>
+                                                                </DefinedValue>
+                                                              </DefinedValues>
+                                                              <RelOp AvgRowSize="489" EstimateCPU="0.064043" EstimateIO="21.7668" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="57563.1" LogicalOp="Clustered Index Seek" NodeId="27" Parallel="false" PhysicalOp="Clustered Index Seek" EstimatedTotalSubtreeCost="21.8309">
+                                                                <OutputList>
+                                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTitle" />
+                                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTag" />
+                                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryDate" />
+                                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTeaser" />
+                                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="UserId" />
+                                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryIsActive" />
+                                                                  <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryOwner" />
+                                                                </OutputList>
+                                                                <IndexScan Ordered="true" ScanDirection="FORWARD" ForcedIndex="false" NoExpandHint="false">
+                                                                  <DefinedValues>
+                                                                    <DefinedValue>
+                                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                                                                    </DefinedValue>
+                                                                    <DefinedValue>
+                                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTitle" />
+                                                                    </DefinedValue>
+                                                                    <DefinedValue>
+                                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTag" />
+                                                                    </DefinedValue>
+                                                                    <DefinedValue>
+                                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryDate" />
+                                                                    </DefinedValue>
+                                                                    <DefinedValue>
+                                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="CompanyId" />
+                                                                    </DefinedValue>
+                                                                    <DefinedValue>
+                                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryTeaser" />
+                                                                    </DefinedValue>
+                                                                    <DefinedValue>
+                                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="UserId" />
+                                                                    </DefinedValue>
+                                                                    <DefinedValue>
+                                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryIsActive" />
+                                                                    </DefinedValue>
+                                                                    <DefinedValue>
+                                                                      <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryOwner" />
+                                                                    </DefinedValue>
+                                                                  </DefinedValues>
+                                                                  <Object Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Index="[PK_Entries]" Alias="[E]" />
+                                                                  <SeekPredicates>
+                                                                    <SeekPredicate>
+                                                                      <StartRange ScanType="GT">
+                                                                        <RangeColumns>
+                                                                          <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryId" />
+                                                                        </RangeColumns>
+                                                                        <RangeExpressions>
+                                                                          <ScalarOperator ScalarString="[@MinValue]">
+                                                                            <Identifier>
+                                                                              <ColumnReference Column="@MinValue" />
+                                                                            </Identifier>
+                                                                          </ScalarOperator>
+                                                                        </RangeExpressions>
+                                                                      </StartRange>
+                                                                    </SeekPredicate>
+                                                                  </SeekPredicates>
+                                                                  <Predicate>
+                                                                    <ScalarOperator ScalarString="[CompanyFeeds].[dbo].[Entries].[EntryIsActive] as [E].[EntryIsActive]=(1)">
+                                                                      <Compare CompareOp="EQ">
+                                                                        <ScalarOperator>
+                                                                          <Identifier>
+                                                                            <ColumnReference Database="[CompanyFeeds]" Schema="[dbo]" Table="[Entries]" Alias="[E]" Column="EntryIsActive" />
+                                                                          </Identifier>
+                                                                        </ScalarOperator>
+                                                                        <ScalarOperator>
+                                                                          <Const ConstValue="(1)" />
+                                                                        </ScalarOperator>
+                                                                      </Compare>
+                                                                    </ScalarOperator>
+                                                                  </Predicate>
+                                                                </IndexScan>
+                                                              </RelOp>
+                                                            </ComputeScalar>
+                                                          </RelOp>
+                                                        </Hash>
+                                                      </RelOp>
+                                                    </Sort>
+                                                  </RelOp>
+                                                </Merge>
+                                              </RelOp>
+                                            </Sort>
+                                          </RelOp>
+                                        </Merge>
+                                      </RelOp>
+                                    </ComputeScalar>
+                                  </RelOp>
+                                </Hash>
+                              </RelOp>
+                            </ComputeScalar>
+                          </RelOp>
+                        </ComputeScalar>
+                      </RelOp>
+                    </TopSort>
+                  </RelOp>
+                </QueryPlan>
+              </StmtSimple>
+            </Statements>
+          </StoredProc>
+        </StmtSimple>
+      </Statements>
+    </Batch>
+  </BatchSequence>
+</ShowPlanXML>
